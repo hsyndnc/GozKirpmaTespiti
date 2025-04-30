@@ -3,6 +3,7 @@ import os
 import cv2
 import dlib
 from scipy.spatial import distance
+import time
 
 def calculate_EAR(eye):
     A = distance.euclidean(eye[1], eye[5])
@@ -63,6 +64,19 @@ def main():
         right_ear = calculate_EAR(rightEye)
         ear = (left_ear + right_ear) / 2.0
         print(f"EAR: {ear:.2f}")
+
+        # gözün kapalı kalma süresi ile alarm ilişkisi
+        if ear < 0.26:
+                if not alarm_playing:
+                    eyes_closed_start_time = time.time()
+                    alarm_sound.play(-1)
+                    alarm_playing = True
+                eyes_closed_duration = time.time() - eyes_closed_start_time
+        else:
+                if alarm_playing:
+                    alarm_sound.stop()
+                    alarm_playing = False
+                    eyes_closed_duration = 0
 
 
         cv2.imshow("Görüntü", frame)
