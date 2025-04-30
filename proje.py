@@ -1,4 +1,6 @@
 from scipy.spatial import distance
+import pygame
+import os
 
 def calculate_EAR(eye):
     """Göz açıklık oranını (EAR) hesaplar"""
@@ -9,4 +11,9 @@ def calculate_EAR(eye):
     return ear_aspect_ratio
 
 def main():
-    pass
+    pygame.mixer.init()
+    alarm_sound=pygame.mixer.Sound("alarm.wav")
+    
+    if not os.path.exists("Shape_predictor_68_face_landmarks.dat"):
+        print("Hata: shape_predictor_68_face_landmarks.dat dosyası bulunamadı!")
+        return
