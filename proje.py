@@ -9,6 +9,7 @@ def calculate_EAR(eye):
     A = distance.euclidean(eye[1], eye[5])
     B = distance.euclidean(eye[2], eye[4])
     C = distance.euclidean(eye[0], eye[3])
+    ear_aspect_ratio = (A+B)/(2.0*C)
     return (A + B) / (2.0 * C)
 
 def main():
@@ -26,6 +27,10 @@ def main():
 
     hog_face_detector = dlib.get_frontal_face_detector()
     dlib_facelandmark = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
+
+    alarm_playing = False
+    eyes_closed_start_time = 0
+    eyes_closed_duration = 0
 
     while True:
         ret, frame = cap.read()
@@ -54,7 +59,9 @@ def main():
                 x = landmarks.part(n).x
                 y = landmarks.part(n).y
                 rightEye.append((x, y))
-                next_point = 42 if n == 47 else n + 1
+                next_point = n+1 
+                if n == 47:
+                    next_point = 42
                 x2 = landmarks.part(next_point).x
                 y2 = landmarks.part(next_point).y
                 cv2.line(frame, (x, y), (x2, y2), (0, 255, 0), 1)
