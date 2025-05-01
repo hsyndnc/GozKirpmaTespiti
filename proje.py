@@ -79,6 +79,11 @@ def main():
                         alarm_playing = True
 
                     eyes_closed_duration = time.time() - eyes_closed_start_time
+                    cv2.putText(frame, "GOZLER KAPALI", (20,100),
+                              cv2.FONT_HERSHEY_SIMPLEX, 3, (0,0,255), 4)
+                    cv2.putText(frame, f"Kapali Sure: {eyes_closed_duration:.1f} saniye", (20,400),
+                              cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2)
+                    print(f"Drowsy - Kapalı Süre: {eyes_closed_duration:.1f} saniye")
             else:
                     if alarm_playing:
                         alarm_sound.stop()
