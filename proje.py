@@ -66,11 +66,26 @@ def main():
                 y2 = landmarks.part(next_point).y
                 cv2.line(frame, (x, y), (x2, y2), (0, 255, 0), 1)
         
-        # test kodu
-        left_ear = calculate_EAR(leftEye)
-        right_ear = calculate_EAR(rightEye)
-        ear = (left_ear + right_ear) / 2.0
-        print(f"EAR: {ear:.2f}")
+            # test kodu
+            left_ear = calculate_EAR(leftEye)
+            right_ear = calculate_EAR(rightEye)
+            EAR = (left_ear + right_ear) / 2.0
+        
+
+            if EAR < 0.26:
+                    if not alarm_playing:
+                        eyes_closed_start_time = time.time()
+                        alarm_sound.play(-1)
+                        alarm_playing = True
+
+                    eyes_closed_duration = time.time() - eyes_closed_start_time
+            else:
+                    if alarm_playing:
+                        alarm_sound.stop()
+                        alarm_playing = False
+                        eyes_closed_duration = 0
+
+            print(f"EAR: {EAR:.2f}")
 
 
         cv2.imshow("Görüntü", frame)
