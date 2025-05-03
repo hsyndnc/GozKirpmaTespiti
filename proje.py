@@ -62,16 +62,21 @@ def main():
         # test kodu
         left_ear = calculate_EAR(leftEye)
         right_ear = calculate_EAR(rightEye)
-        ear = (left_ear + right_ear) / 2.0
-        print(f"EAR: {ear:.2f}")
+        EAR = (left_ear + right_ear) / 2.0
+        print(f"EAR: {EAR:.2f}")
 
         # gözün kapalı kalma süresi ile alarm ilişkisi
-        if ear < 0.26:
+        if EAR < 0.26:
                 if not alarm_playing:
                     eyes_closed_start_time = time.time()
                     alarm_sound.play(-1)
                     alarm_playing = True
                 eyes_closed_duration = time.time() - eyes_closed_start_time
+                cv2.putText(frame, "GOZLER KAPALI", (20,100),
+                              cv2.FONT_HERSHEY_SIMPLEX, 3, (0,0,255), 4)
+                cv2.putText(frame, f"Kapali Sure: {eyes_closed_duration:.1f} saniye", (20,400),
+                              cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2)
+                print(f"Drowsy - Kapalı Süre: {eyes_closed_duration:.1f} saniye")
         else:
                 if alarm_playing:
                     alarm_sound.stop()
@@ -82,3 +87,6 @@ def main():
         cv2.imshow("Görüntü", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+
+
+            
