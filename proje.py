@@ -90,6 +90,8 @@ def main():
                     alarm_playing = False
                     eyes_closed_duration = 0
 
+            print(f"EAR: {EAR:.2f}")
+
 
         cv2.imshow("Görüntü", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
