@@ -14,9 +14,9 @@ def calculate_EAR(eye):
 
 def main():
     pygame.mixer.init()
-    alarm_sound = pygame.mixer.Sound("alarm.wav")
+    alarm_sound = pygame.mixer.Sound("GozKirpmaTespiti/alarm.wav")
 
-    if not os.path.exists("shape_predictor_68_face_landmarks.dat"):
+    if not os.path.exists("GozKirpmaTespiti/shape_predictor_68_face_landmarks.dat"):
         print("Hata: shape_predictor_68_face_landmarks.dat dosyası bulunamadı!")
         return
     try:
@@ -26,7 +26,7 @@ def main():
             return
 
         hog_face_detector = dlib.get_frontal_face_detector()
-        dlib_facelandmark = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
+        dlib_facelandmark = dlib.shape_predictor("GozKirpmaTespiti/shape_predictor_68_face_landmarks.dat")
 
         alarm_playing = False
         eyes_closed_start_time = 0
